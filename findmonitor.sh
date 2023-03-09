@@ -28,11 +28,15 @@ if [ ! -f /home/$USER/Desktop/monitor.tex ]; then
 	touch /home/$USER/Desktop/monitor.tex
 	echo "\documentclass{article}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{blindtext}" >> /home/$USER/Desktop/monitor.tex
-	echo "\usepackage[paperheight=4.0in,paperwidth=8.0in,margin=0.25in,heightrounded,showframe]{geometry}" >> /home/$USER/Desktop/monitor.tex
+	echo "\usepackage{mdframed}" >> /home/$USER/Desktop/monitor.tex
+#	echo "\usepackage[paperheight=4.0in,paperwidth=8.0in,margin=0.25in,heightrounded,showframe]{geometry}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{parskip}" >> /home/$USER/Desktop/monitor.tex
 	echo "\begin{document}" >> /home/$USER/Desktop/monitor.tex
 fi
 
+
+echo "\begin{table}" >> /home/$USER/Desktop/monitor.tex
+echo "\begin{mdframed}" >> /home/$USER/Desktop/monitor.tex
 # dccutil stuff
 CAPABILITIES=$(sudo ddcutil capabilities)
 F60="Feature: 60"
@@ -97,6 +101,8 @@ esac
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex
 # xrandr --verbose | edid-decode | grep "Serial Number:" | cut -c 32- >> /home/$USER/Desktop/monitor.tex
+echo "\end{mdframed}" >> /home/$USER/Desktop/monitor.tex
+echo "\end{table}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{document}"  >> /home/$USER/Desktop/monitor.tex
 # This is so I can do a barcode later
 
