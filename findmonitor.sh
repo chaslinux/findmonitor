@@ -3,8 +3,10 @@
 # by chaslinux@gmail.com
 # Licensed under GPL v3
 
+
 clear
 
+sudo apt install ddcutil -y # to understand what ports are available
 sudo apt install texlive-latex-extra -y
 sudo apt -y install texlive-latex-base # to make pdfs
 sudo apt -y install barcode # to create barcodes
@@ -30,6 +32,14 @@ if [ ! -f /home/$USER/Desktop/monitor.tex ]; then
 	echo "\usepackage{parskip}" >> /home/$USER/Desktop/monitor.tex
 	echo "\begin{document}" >> /home/$USER/Desktop/monitor.tex
 fi
+
+# dccutil stuff
+CAPABILITIES=$(sudo ddcutil capabilities)
+F60="Feature: 60"
+FEATURE="Feature"
+F60CAP=${CAPABILITIES#*$F60}
+F60CAP=${F60CAP#*"(Input Source)"}
+LIMFEATURE=${F60CAP%%$FEATURE*}
 
 LONGMFG=$(xrandr --verbose | edid-decode | grep "Manufacturer" | xargs | cut -c 14-)
 SHORTMFG=$(echo $LONGMFG | cut -c -3 | xargs)
@@ -84,7 +94,8 @@ case $SHORTMFG in
 		echo "I don't know this monitor" >> /home/$USER/Desktop/monitor.tex >> /home/$USER/Desktop/monitor.tex
 		;;
 esac
-echo -ne "\n"  >> /home/$USER/Desktop/monitor.tex
+echo "\newline" >> /home/$USER/Desktop/monitor.tex
+echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex
 # xrandr --verbose | edid-decode | grep "Serial Number:" | cut -c 32- >> /home/$USER/Desktop/monitor.tex
 echo "\end{document}"  >> /home/$USER/Desktop/monitor.tex
 # This is so I can do a barcode later
