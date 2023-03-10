@@ -28,6 +28,7 @@ FEATURE="Feature"
 F60CAP=${CAPABILITIES#*$F60}
 F60CAP=${F60CAP#*"(Input Source)"}
 LIMFEATURE=${F60CAP%%$FEATURE*}
+EMPTYLIM=$(echo $LIMFEATURE | xargs)
 SERIAL=$(xrandr --verbose | edid-decode | grep "Product Serial Number:" | xargs | cut -c 32-)
 ALTSERIAL=$(xrandr --verbose | edid-decode | grep "Serial Number" | sed -n -e 's/^.*Number //p' | xargs)
 MODEL=$(xrandr --verbose | edid-decode | grep "Product Name" | xargs | cut -c 23-)
@@ -123,8 +124,8 @@ echo "\newline" >> /home/$USER/Desktop/monitor.tex
 #if [[ $DONOT=="Display not found" ]] || [[ -z "$LIMFEATURE" ]]; then
 if [ $DONOT=="Display not found" ]; then
 		echo "Monitor Not DDC compatible, not listing inputs." >> /home/$USER/Desktop/monitor.tex
-	elif [ -z "$LIMFEATURE" ]; then
-		echo "Monitor supports DDC, but manufacturer did not fill out inputs"
+	elif [ -z "$EMPTYLIM" ]; then
+		echo "Monitor supports DDC, but mfg did not fill out inputs"
 	else
 		echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
 fi
