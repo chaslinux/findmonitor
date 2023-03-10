@@ -29,6 +29,7 @@ F60CAP=${CAPABILITIES#*$F60}
 F60CAP=${F60CAP#*"(Input Source)"}
 LIMFEATURE=${F60CAP%%$FEATURE*}
 SERIAL=$(xrandr --verbose | edid-decode | grep "Product Serial Number:" | xargs | cut -c 32-)
+ALTSERIAL=$(xrandr --verbose | edid-decode | grep "Serial Number" | sed -n -e 's/^.*Number //p' | xargs)
 MODEL=$(xrandr --verbose | edid-decode | grep "Product Name" | xargs | cut -c 23-)
 LONGMFG=$(xrandr --verbose | edid-decode | grep "Manufacturer" | xargs | cut -c 14-)
 SHORTMFG=$(echo $LONGMFG | cut -c -3 | xargs)
@@ -81,8 +82,14 @@ esac
 # temporarily delete monitor.tex before running script
 rm /home/$USER/Desktop/monitor.tex
 
+# Some monitors do not use the field "Product Serial Number", use $ALTSERIAL instead
+if [ -z "$SERIAL" ]; then
+	SERIAL=$ALTSERIAL
+fi
+
 # Put the Serial number in a text file on the desktop
 echo $SERIAL >> /home/$USER/Desktop/monserial.txt
+
 barcode -e 128 -i /home/$USER/Desktop/monserial.txt  -o /home/$USER/Desktop/monserial.eps
 epspdf /home/$USER/Desktop/monserial.eps /home/$USER/Desktop/monserial.pdf
 pdfcrop --margins '0 10 10 0' /home/$USER/Desktop/monserial.pdf /home/$USER/Desktop/cropserial.pdf
