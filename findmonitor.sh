@@ -22,6 +22,7 @@ fi
 
 # Declare a bunch of variables to make life simpler later
 CAPABILITIES=$(sudo ddcutil capabilities)
+DONOT=$CAPABILITIES
 F60="Feature: 60"
 FEATURE="Feature"
 F60CAP=${CAPABILITIES#*$F60}
@@ -109,8 +110,12 @@ echo "Serial Number: " $SERIAL >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Resolution: " $RESOLUTION >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
-echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
-# xrandr --verbose | edid-decode | grep "Serial Number:" | cut -c 32- >> /home/$USER/Desktop/monitor.tex
+if [ $DONOT=="Display not found" ]; then
+		echo "This monitor isn't DCC compatible"
+	else
+		echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
+fi
+
 echo "\includegraphics{cropserial.pdf}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{mdframed}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{table}" >> /home/$USER/Desktop/monitor.tex
