@@ -111,10 +111,11 @@ echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Resolution: " $RESOLUTION >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 if [ $DONOT=="Display not found" ]; then
-		echo "This monitor isn't DCC compatible"
+		echo "Monitor Not DDC compatible, not listing inputs." >> /home/$USER/Desktop/monitor.tex
 	else
 		echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
 fi
+echo "\newline" >> /home/$USER/Desktop/monitor.tex
 
 echo "\includegraphics{cropserial.pdf}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{mdframed}" >> /home/$USER/Desktop/monitor.tex
