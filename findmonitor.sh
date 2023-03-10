@@ -125,7 +125,7 @@ echo "\newline" >> /home/$USER/Desktop/monitor.tex
 if [ $DONOT=="Display not found" ]; then
 		echo "Monitor Not DDC compatible, not listing inputs." >> /home/$USER/Desktop/monitor.tex
 	elif [ -z "$EMPTYLIM" ]; then
-		echo "Monitor supports DDC, but mfg did not fill out inputs"
+		echo "Monitor supports DDC, but mfg did not fill out inputs" >> /home/$USER/Desktop/monitor.tex
 	else
 		echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
 fi
