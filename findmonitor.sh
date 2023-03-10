@@ -117,8 +117,14 @@ echo "Serial Number: " $SERIAL >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Resolution: " $RESOLUTION >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
+# some monitors either don't support ddc or they do, but don't put input into the fields
+# in this case we just say they're not DCC compatible, even if they are. Manufacturers, please
+# fill out these fields
+#if [[ $DONOT=="Display not found" ]] || [[ -z "$LIMFEATURE" ]]; then
 if [ $DONOT=="Display not found" ]; then
 		echo "Monitor Not DDC compatible, not listing inputs." >> /home/$USER/Desktop/monitor.tex
+	elif [ -z "$LIMFEATURE" ]; then
+		echo "Monitor supports DDC, but manufacturer did not fill out inputs"
 	else
 		echo "Inputs" $LIMFEATURE >> /home/$USER/Desktop/monitor.tex #Display Inputs
 fi
