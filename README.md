@@ -1,6 +1,6 @@
 # findmonitor.sh
 # by chaslinux, chaslinux-at-gmail.com
-# Licenses under GPL v3
+# Licensed under GPL v3
 
 This script is intended to be used by people who have to process a bunch of monitors in a short time.
 It has been tested on Xubuntu 20.04 with a few dozen monitors, but there are many manufacturers I may not
