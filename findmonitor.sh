@@ -35,7 +35,14 @@ MODEL=$(xrandr --verbose | edid-decode | grep "Product Name" | xargs | cut -c 23
 LONGMFG=$(xrandr --verbose | edid-decode | grep "Manufacturer" | xargs | cut -c 14-)
 SHORTMFG=$(echo $LONGMFG | cut -c -3 | xargs)
 MANUFACTURER="I don't know this monitor"
-RESOLUTION=$(xrandr | grep " connected" |sed -n -e 's/^.*connected //p' | xargs | awk '{print $1}')
+#RESOLUTION=$(xrandr | grep " connected" |sed -n -e 's/^.*connected //p' | xargs | awk '{print $1}')
+RESOLUTION=$(xrandr --verbose | grep "HSync" | xargs | awk '{print $1}')
+
+if [ $RESOLUTION == "primary" ]; then
+	{
+	RESOLUTION=$(xrandr --verbose | grep "HSync" | xargs | awk '{print $2}')
+	}
+fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
