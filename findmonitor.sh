@@ -46,6 +46,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	HIT)
+		MANUFACTURER="Hyundai"
+		;;
 	HWP)
 		MANUFACTURER="HP"
 		;;
