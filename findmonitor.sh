@@ -46,6 +46,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	PHL)
+		MANUFACTURER="Philips"
+		;;
 	XXX)
 		MANUFACTURER="RCA"
 		;;
