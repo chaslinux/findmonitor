@@ -46,6 +46,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	SPT)
+		MANUFACTURER="Sceptre"
+		;;
 	PHL)
 		MANUFACTURER="Philips"
 		;;
