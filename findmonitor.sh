@@ -47,6 +47,9 @@ fi
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
 	AUO)
+		MANUFACTURER="AU Optronics (sometimes for MSI)"
+		;;
+	MSI)
 		MANUFACTURER="MSI"
 		;;
 	SPT)
@@ -89,6 +92,9 @@ case $SHORTMFG in
 		MANUFACTURER="NEC"
 		;;
 	ACI)
+		MANUFACTURER="Ancor Communications - sometimes for ASUS"
+		;;
+	ASU)
 		MANUFACTURER="ASUS"
 		;;
 	AOC)
@@ -99,6 +105,21 @@ case $SHORTMFG in
 		;;
 	BNQ)
 		MANUFACTURER="BenQ"
+		;;
+	AOP)
+		MANUFACTURER="AOpen"
+		;;
+	IVW)
+		MANUFACTURER="Innoview"
+		;;
+	PXO)
+		MANUFACTURER="Pixio"
+		;;
+	SNH)
+		MANUFACTURER="Sansui"
+		;;
+	GBT)
+		MANUFACTURER="Gigabyte"
 		;;
 	*)
 		MANUFACTURER="I don't know this monitor"
