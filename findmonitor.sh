@@ -123,6 +123,9 @@ case $SHORTMFG in
 	GBT)
 		MANUFACTURER="Gigabyte"
 		;;
+	KTC)
+		MANUFACTURER="Kingston Tech Corporation"
+		;;
 	*)
 		MANUFACTURER="I don't know this monitor"
 		;;
@@ -169,6 +172,7 @@ echo "\newline" >> /home/$USER/Desktop/monitor.tex
 
 if [ ! -z "$WHENMADE" ]; then
 	echo "$WHENMADE" >> /home/$USER/Desktop/monitor.tex
+	echo "\newline" >> /home/$USER/Desktop/monitor.tex
 fi
 
 # some monitors either don't support ddc or they do, but don't put input into the fields
