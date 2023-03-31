@@ -21,6 +21,7 @@ if [ ! -f /usr/bin/edid-decode ]; then
 fi
 
 # Declare a bunch of variables to make life simpler later
+WHENMADE=""
 CAPABILITIES=$(sudo ddcutil capabilities)
 DONOT=$CAPABILITIES
 F60="Feature: 60"
@@ -35,6 +36,7 @@ MODEL=$(xrandr --verbose | edid-decode | grep "Product Name" | xargs | cut -c 23
 LONGMFG=$(xrandr --verbose | edid-decode | grep "Manufacturer" | xargs | cut -c 14-)
 SHORTMFG=$(echo $LONGMFG | cut -c -3 | xargs)
 MANUFACTURER="I don't know this monitor"
+WHENMADE=$(xrandr --verbose | edid-decode | grep "Made in week")
 #RESOLUTION=$(xrandr | grep " connected" |sed -n -e 's/^.*connected //p' | xargs | awk '{print $1}')
 RESOLUTION=$(xrandr --verbose | grep "HSync" | xargs | awk '{print $1}')
 
@@ -164,6 +166,11 @@ echo "Serial Number: " $SERIAL >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Resolution: " $RESOLUTION >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
+
+if [ ! -z "$WHENMADE" ]; then
+	echo "$WHENMADE" >> /home/$USER/Desktop/monitor.tex
+fi
+
 # some monitors either don't support ddc or they do, but don't put input into the fields
 # in this case we just say they're not DCC compatible, even if they are. Manufacturers, please
 # fill out these fields
