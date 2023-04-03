@@ -7,10 +7,12 @@ clear
 
 sudo apt install ddcutil -y # to understand what ports are available
 sudo apt install texlive-latex-extra -y
-sudo apt -y install texlive-latex-base # to make pdfs
-sudo apt -y install barcode # to create barcodes
-sudo apt -y install texlive-extra-utils # So we can create convert eps barcode to pdf then crop
-sudo apt -y install texlive-pictures # more barcode handling
+sudo apt install texlive-latex-base -y # to make pdfs
+sudo apt install texlive-pstricks -y # For barcodes
+# Commented out next 3 lines on 04/03/2023 for new psbarcode LaTeX commands
+#sudo apt -y install barcode # to create barcodes
+#sudo apt -y install texlive-extra-utils # So we can create convert eps barcode to pdf then crop
+#sudo apt -y install texlive-pictures # more barcode handling
 
 
 # check to see if edid-decode package is installed, if not, install it.
@@ -140,11 +142,11 @@ if [ -z "$SERIAL" ]; then
 fi
 
 # Put the Serial number in a text file on the desktop
-echo $SERIAL >> /home/$USER/Desktop/monserial.txt
+#echo $SERIAL >> /home/$USER/Desktop/monserial.txt
 
-barcode -e 128 -i /home/$USER/Desktop/monserial.txt  -o /home/$USER/Desktop/monserial.eps
-epspdf /home/$USER/Desktop/monserial.eps /home/$USER/Desktop/monserial.pdf
-pdfcrop --margins '0 10 10 0' /home/$USER/Desktop/monserial.pdf /home/$USER/Desktop/cropserial.pdf
+#barcode -e 128 -i /home/$USER/Desktop/monserial.txt  -o /home/$USER/Desktop/monserial.eps
+#epspdf /home/$USER/Desktop/monserial.eps /home/$USER/Desktop/monserial.pdf
+#pdfcrop --margins '0 10 10 0' /home/$USER/Desktop/monserial.pdf /home/$USER/Desktop/cropserial.pdf
 
 #Set up the LaTeX document
 if [ ! -f /home/$USER/Desktop/monitor.tex ]; then
@@ -153,9 +155,10 @@ if [ ! -f /home/$USER/Desktop/monitor.tex ]; then
 	echo "\documentclass{article}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{blindtext}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{mdframed}" >> /home/$USER/Desktop/monitor.tex
+	echo "\usepackage{graphicx}" >> /home/$USER/Desktop/monitor.tex
+	echo "\usepackage{pst-barcode}" >> /home/$USER/Desktop/monitor.tex
 #	echo "\usepackage[paperheight=4.0in,paperwidth=8.0in,margin=0.25in,heightrounded,showframe]{geometry}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{parskip}" >> /home/$USER/Desktop/monitor.tex
-	echo "\usepackage{graphicx}" >> /home/$USER/Desktop/monitor.tex
 	echo "\begin{document}" >> /home/$USER/Desktop/monitor.tex
 fi
 echo "\begin{table}" >> /home/$USER/Desktop/monitor.tex
@@ -188,7 +191,11 @@ if [ $DONOT=="Display not found" ]; then
 fi
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 
-echo "\includegraphics{cropserial.pdf}" >> /home/$USER/Desktop/monitor.tex
+echo "\begin{pspicture}(3.5,3)" >> /home/$USER/Desktop/monitor.tex
+echo "\psbarcode{$SERIAL}{includetext}{ean13}" >> /home/$USER/Desktop/monitor.tex
+echo "\end{pspicture}" >> /home/$USER/Desktop/monitor.tex
+
+#echo "\includegraphics{cropserial.pdf}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{mdframed}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{table}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{document}"  >> /home/$USER/Desktop/monitor.tex
@@ -197,7 +204,8 @@ echo "\end{document}"  >> /home/$USER/Desktop/monitor.tex
 # strip any underscores
 cd /home/$USER/Desktop
 sed -i s/\_//g monitor.tex
-pdflatex monitor.tex
+latex monitor.tex
+dvipdfm /home/$USER/Desktop/monitor.dvi
 rm /home/$USER/Desktop/monitor.tex
 rm /home/$USER/Desktop/monitor.log
 rm /home/$USER/Desktop/monitor.aux
