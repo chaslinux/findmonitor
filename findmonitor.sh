@@ -21,6 +21,7 @@ if [ ! -f /usr/bin/edid-decode ]; then
 fi
 
 # Declare a bunch of variables to make life simpler later
+PRICE=0
 WHENMADE=""
 CAPABILITIES=$(sudo ddcutil capabilities)
 DONOT=$CAPABILITIES
@@ -39,6 +40,46 @@ MANUFACTURER="I don't know this monitor"
 WHENMADE=$(xrandr --verbose | edid-decode | grep "Made in")
 #RESOLUTION=$(xrandr | grep " connected" |sed -n -e 's/^.*connected //p' | xargs | awk '{print $1}')
 RESOLUTION=$(xrandr --verbose | grep "HSync" | xargs | awk '{print $1}')
+PRICE="SEE STAFF"
+MODEL=$(xrandr --verbose | edid-decode | grep "Product Name" | xargs | cut -c 23-)
+MONCAPS=$(echo $MODEL | tr [:lower:] [:upper:])
+MONITORSIZE="${MONCAPS//[A-Z]}"
+
+if [[ $MONITORSIZE -ge 2 ]]; then
+	MONITORSIZE=$(echo ${MONITORSIZE:1:2})
+fi
+
+echo $MODEL
+echo $MONCAPS
+echo $MONITORSIZE
+
+case $MONITORSIZE in
+	24)
+	PRICE=30
+	;;
+	23)
+	PRICE=20
+	;;
+	22)
+	PRICE=20
+	;;
+	21)
+	PRICE=10
+	;;
+	20)
+	PRICE=10
+	;;
+	19)
+	PRICE=5
+	;;
+	17)
+	PRICE=5
+	;;
+	*)
+	PRICE="SEE STAFF"
+	;;
+
+esac
 
 if [ $RESOLUTION == "primary" ]; then
 	{
@@ -156,12 +197,17 @@ if [ ! -f /home/$USER/Desktop/monitor.tex ]; then
 #	echo "\usepackage[paperheight=4.0in,paperwidth=8.0in,margin=0.25in,heightrounded,showframe]{geometry}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{parskip}" >> /home/$USER/Desktop/monitor.tex
 	echo "\usepackage{graphicx}" >> /home/$USER/Desktop/monitor.tex
+	echo "\usepackage[T1]{fontenc}" >> /home/$USER/Desktop/monitor.tex
 	echo "\begin{document}" >> /home/$USER/Desktop/monitor.tex
 fi
 echo "\begin{table}" >> /home/$USER/Desktop/monitor.tex
 echo "\begin{mdframed}" >> /home/$USER/Desktop/monitor.tex
+echo "{\fontfamily{phv}\selectfont" >> /home/$USER/Desktop/monitor.tex
+echo "\begin{flushright} \Huge Price: \textdollar" $PRICE "\end{flushright}}">>  /home/$USER/Desktop/monitor.tex
+echo "\normalsize" >> /home/$USER/Desktop/monitor.tex
 
-echo "Manufacturer:" $MANUFACTURER  >> /home/$USER/Desktop/monitor.tex >> /home/$USER/Desktop/monitor.tex
+echo "\begin{flushleft}" >> /home/$USER/Desktop/monitor.tex
+echo "Manufacturer:" $MANUFACTURER  >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Model: " $MODEL >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
@@ -169,6 +215,7 @@ echo "Serial Number: " $SERIAL >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 echo "Resolution: " $RESOLUTION >> /home/$USER/Desktop/monitor.tex
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
+
 
 if [ ! -z "$WHENMADE" ]; then
 	echo "$WHENMADE" >> /home/$USER/Desktop/monitor.tex
@@ -189,6 +236,11 @@ fi
 echo "\newline" >> /home/$USER/Desktop/monitor.tex
 
 echo "\includegraphics{cropserial.pdf}" >> /home/$USER/Desktop/monitor.tex
+
+# echo "\begin{flushright} \Huge \sffamily \bfseries Price:" $PRICE "\end{flushright}">>  /home/$USER/Desktop/monitor.tex
+# echo "\normalsize" >> /home/$USER/Desktop/monitor.tex
+
+echo "\end{flushleft}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{mdframed}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{table}" >> /home/$USER/Desktop/monitor.tex
 echo "\end{document}"  >> /home/$USER/Desktop/monitor.tex
