@@ -167,6 +167,9 @@ case $SHORTMFG in
 	KTC)
 		MANUFACTURER="Kingston Tech Corporation"
 		;;
+	LCD)
+		MANUFACTURER="Calypso"
+		;;
 	*)
 		MANUFACTURER="I don't know this monitor"
 		;;
