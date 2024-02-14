@@ -46,7 +46,7 @@ MONCAPS=$(echo $MODEL | tr [:lower:] [:upper:])
 MONITORSIZE="${MONCAPS//[A-Z]}"
 
 if [[ $MONITORSIZE -ge 2 ]]; then
-	MONITORSIZE=$(echo ${MONITORSIZE:0:2})
+	MONITORSIZE=$(echo $MONITORSIZE | -c -2)
 fi
 
 echo $MODEL
