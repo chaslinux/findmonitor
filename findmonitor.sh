@@ -140,6 +140,9 @@ case $SHORTMFG in
 	ASU)
 		MANUFACTURER="ASUS"
 		;;
+	AUS)
+		MANUFACTURER="ASUS"
+		;;
 	AOC)
 		MANUFACTURER="AOC"
 		;;
