@@ -89,6 +89,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	GWY)
+		MANUFACTURER="Gateway"
+		;;
 	AUO)
 		MANUFACTURER="AU Optronics (sometimes for MSI)"
 		;;
