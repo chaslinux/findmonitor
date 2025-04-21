@@ -5,7 +5,7 @@
 This script is intended to be used by people who have to process a bunch of monitors in a short time.
 It has been tested on Xubuntu 20.04 with a few dozen monitors, but there are many manufacturers I may not
 have covered. It is intended only for desktop monitors, not laptops or televisions. It is tested on
-Xubuntu 20.04 and 22.04, but may work on other Debian-based systems.
+Xubuntu 20.04, 22.04, 24.04, Linux Mint 21.3, and 22.1 but may work on other Debian-based systems.
 
 This script uses EDID: https://en.wikipedia.org/wiki/Extended_Display_Identification_Data and DDC: 
 https://en.wikipedia.org/wiki/Display_Data_Channel to grab information about a monitor and produce 
