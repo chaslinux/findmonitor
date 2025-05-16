@@ -90,6 +90,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	INS)
+		MANUFACTURER="Insignia"
+		;;
 	HKC)
 		MANUFACTURER="RCA"
 		;;
