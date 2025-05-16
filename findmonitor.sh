@@ -90,6 +90,9 @@ fi
 
 # Determine the manufacturer by the Manufacturer Code $SHORTMFG
 case $SHORTMFG in
+	HKC)
+		MANUFACTURER="RCA"
+		;;
 	GWY)
 		MANUFACTURER="Gateway"
 		;;
