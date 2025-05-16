@@ -55,6 +55,9 @@ echo $MONCAPS
 echo $MONITORSIZE
 
 case $MONITORSIZE in
+	26)
+	PRICE=50
+	;;
 	24)
 	PRICE=30
 	;;
