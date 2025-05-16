@@ -191,14 +191,15 @@ rm /home/$USER/Desktop/monitor.tex 2>/dev/null
 # Some monitors do not use the field "Product Serial Number", use $ALTSERIAL instead
 if [ -z "$SERIAL" ]; then
 	SERIAL=$ALTSERIAL
-fi
-if [ -z "$SERIAL" ]; then
-        SERIAL=$ALTALTSERIAL
-fi
-if [ -z "$SERIAL" ]; then
-	SERIAL=$("RND" + $RANDOM)
+	if [ -z "$SERIAL" ]; then
+		SERIAL=$ALTALTSERIAL
+	fi
+	if [ -z "$SERIAL" ]; then
+		SERIAL=$("RND" + $RANDOM)
+	fi
 fi
 
+echo $SERIAL
 # Put the Serial number in a text file on the desktop
 echo $SERIAL >> /home/$USER/Desktop/monserial.txt
 
