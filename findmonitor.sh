@@ -186,14 +186,17 @@ case $SHORTMFG in
 esac
 
 # temporarily delete monitor.tex before running script
-rm /home/$USER/Desktop/monitor.tex
+rm /home/$USER/Desktop/monitor.tex 2>/dev/null
 
 # Some monitors do not use the field "Product Serial Number", use $ALTSERIAL instead
 if [ -z "$SERIAL" ]; then
 	SERIAL=$ALTSERIAL
-    if [ -z "$SERIAL" ]; then
+fi
+if [ -z "$SERIAL" ]; then
         SERIAL=$ALTALTSERIAL
-    fi
+fi
+if [ -z "$SERIAL" ]; then
+	SERIAL=$("RND" + $RANDOM)
 fi
 
 # Put the Serial number in a text file on the desktop
