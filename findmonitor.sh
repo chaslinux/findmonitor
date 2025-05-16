@@ -195,7 +195,7 @@ if [ -z "$SERIAL" ]; then
 		SERIAL=$ALTALTSERIAL
 	fi
 	if [ -z "$SERIAL" ]; then
-		SERIAL=$("RND" + $RANDOM)
+		SERIAL=RND$(uuidgen | tr -d '-' | head -c 8 | tr '[:lower:]' '[:upper:]')
 	fi
 fi
 
