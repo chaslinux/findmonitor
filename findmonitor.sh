@@ -12,6 +12,10 @@ sudo apt -y install barcode # to create barcodes
 sudo apt -y install texlive-extra-utils # So we can create convert eps barcode to pdf then crop
 sudo apt -y install texlive-pictures # more barcode handling
 
+if [ -f /home/$USER/Desktop/monitor.pdf ]; then
+    echo "*** Removing old monitor.pdf ***"
+    rm /home/$USER/Desktop/monitor.pdf
+fi
 
 # check to see if edid-decode package is installed, if not, install it.
 if [ ! -f /usr/bin/edid-decode ]; then
